@@ -1,0 +1,15 @@
+{
+    "name": "maxim/rmasla",
+    "autoload": {
+        "psr-4": {
+            "Maxim\\Rmasla\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "maximt",
+            "email": "vbmaxim@gmail.com"
+        }
+    ],
+    "require": {}
+}
