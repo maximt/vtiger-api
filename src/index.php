@@ -15,7 +15,7 @@ function handleRoute($method, $route) {
         return;
     }
     
-    action_get_404();
+    action_error(404);
 }
 
 function view($name, $data = []) {
@@ -27,7 +27,7 @@ function view($name, $data = []) {
     $loader = new \Twig\Loader\FilesystemLoader($path_templates);
 
     if (!$loader->exists($view_name)) {
-        action_get_404();
+        action_error(501);
         return;
     }
 
