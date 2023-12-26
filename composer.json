@@ -2,7 +2,7 @@
     "name": "maxim/rmasla",
     "autoload": {
         "psr-4": {
-            "Maxim\\Rmasla\\": "src/"
+            "Rmasla\\": "src/"
         }
     },
     "authors": [
@@ -11,5 +11,8 @@
             "email": "vbmaxim@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^5.3",
+        "vlucas/phpdotenv": "^5.6"
+    }
 }

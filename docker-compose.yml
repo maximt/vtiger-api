@@ -16,3 +16,4 @@ services:
       context: .
     volumes:
       - ./src:/var/www/html/src
+      - ./.env:/var/www/html/.env      
