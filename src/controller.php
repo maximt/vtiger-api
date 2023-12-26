@@ -1,19 +1,29 @@
 <?php
 
-function action_get_404() {
-    http_response_code(404);
-    echo '404 - Not Found.';
+function action_error($code) {
+    http_response_code($code);
+    die("Error: {$code}");
 }
 
 function action_get_index() {
-    $contacts = get_contacts_list();
-    view('index', ['contacts' => $contacts]);
+    action_get_contacts();
+}
+
+function action_get_contacts() {
+    $data = get_contacts_list();
+    view('contacts', $data);
+}
+
+function action_get_contact() {
+    $id = preg_replace('/\W/', '', $_GET['id']);
+    if (empty($id)) {
+        action_error(403);
+    }
+
+    $data = get_contact($id);
+    view('contact', $data);
 }
 
 function action_get_about() {
     echo 'action_get_about: This is the about page.';
-}
-
-function action_get_contact() {
-    echo 'action_get_contact: Contact us at contact@example.com.';
 }

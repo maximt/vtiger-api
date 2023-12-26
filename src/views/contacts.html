@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacts{% endblock %}
+
+{% block header %}Contacts{% endblock %}
+
+{% block content %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Номер телефона</th>
+            <th>Ответственный</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td>
+                    <a href="/contact?id={{ contact.id }}">{{ contact.lastname }}</a>
+                </td>
+                <td>
+                    <a href="/contact?id={{ contact.id }}">{{ contact.firstname }}</a>
+                </td>
+                <td>{{ contact.mobile }}</td>
+                <td>{{ users[contact.assigned_user_id].first_name }} {{ users[contact.assigned_user_id].last_name }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
