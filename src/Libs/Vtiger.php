@@ -85,4 +85,15 @@ class Vtiger {
         return $result;
     }
 
+    public function getOne(string $id) {
+        if (!isset($this->sessionName)) {
+            throw new \Exception('Cannot get list: not authorized');
+        }
+
+        $response = $this->getResponse(
+            $this->client->get("{$this->url}?operation=retrieve&sessionName={$this->sessionName}&id={$id}")
+        );
+
+        return $response['result'];
+    }
 }
