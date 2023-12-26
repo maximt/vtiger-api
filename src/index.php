@@ -8,7 +8,7 @@ function handleRoute($method, $route) {
     $route = trim($route, '/');
     $route = $route ? $route : 'index';
 
-    $action_name = "action_{$method}_{$route}";
+    $action_name = strtolower("action_{$method}_{$route}");
 
     if (function_exists($action_name)) {
         $action_name();
@@ -42,7 +42,8 @@ function view($name, $data = []) {
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 handleRoute($method, $uri);
