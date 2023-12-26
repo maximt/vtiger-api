@@ -6,8 +6,8 @@ function action_get_404() {
 }
 
 function action_get_index() {
-    $list = get_contacts_list();
-    view('index', ['list' => $list]);
+    $contacts = get_contacts_list();
+    view('index', ['contacts' => $contacts]);
 }
 
 function action_get_about() {

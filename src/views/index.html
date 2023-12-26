@@ -1,9 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %}List{% endblock %}
+{% block title %}Contacts{% endblock %}
+
+{% block header %}Contacts{% endblock %}
 
 {% block content %}
-    {% for item in list %}
-        {{ item.lastname }} {{ item.firstname }};
-    {% endfor %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Номер телефона</th>
+            <th>Ответственный</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in contacts %}
+            <tr>
+                <td>{{ item.lastname }}</td>
+                <td>{{ item.firstname }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>{{ item.assigned_user_id.first_name }} {{ item.assigned_user_id.last_name }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
