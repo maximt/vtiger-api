@@ -19,14 +19,23 @@ function handleRoute($method, $route) {
 }
 
 function view($name, $data = []) {
+    $path_templates = __DIR__ . "/views/";
+    
     $name = preg_replace('/\W/', '', $name);
-    $view_name = realpath(__DIR__ . "/views/{$name}.html");
-    if (!file_exists($view_name)) {
+    $view_name = "{$name}.html";
+    
+    $loader = new \Twig\Loader\FilesystemLoader($path_templates);
+
+    if (!$loader->exists($view_name)) {
         action_get_404();
         return;
     }
-    extract($data);
-    require $view_name;
+
+    $twig = new \Twig\Environment($loader);
+
+    ob_clean();
+    echo $twig->render($view_name, $data);
+    ob_flush();
 }
 
 
