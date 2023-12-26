@@ -21,30 +21,30 @@ class Vtiger {
         $this->accessKey = $accessKey;
     }
 
-    private function getResult($response) {
+    private function getResponse($response) {
         if ($response->getStatusCode() != 200) {
             throw new \Exception("Wrong result. Response error:\n {$response->getStatusCode()}");
         }
 
-        $result = json_decode($response->getBody(), true);
-        if (!$result['success']) {
-            throw new \Exception("Wrong result. Response error:\n {$result['error']['message']}");
+        $response = json_decode($response->getBody(), true);
+        if (!$response['success']) {
+            throw new \Exception("Wrong result. Response error:\n {$response['error']['message']}");
         }
 
-        return $result;
+        return $response;
     }
 
     public function login() {
         // todo check expireTime
 
-        $result = $this->getResult(
+        $response = $this->getResponse(
             $this->client->get("{$this->url}?operation=getchallenge&username={$this->username}")
         );
-        $this->token = $result['result']['token'];
-        $this->serverTime = $result['result']['serverTime'];
-        $this->expireTime = $result['result']['expireTime'];
+        $this->token = $response['result']['token'];
+        $this->serverTime = $response['result']['serverTime'];
+        $this->expireTime = $response['result']['expireTime'];
 
-        $result = $this->getResult(
+        $response = $this->getResponse(
             $this->client->post($this->url, [
                 'body' => [
                     'operation' => 'login',
@@ -53,7 +53,7 @@ class Vtiger {
                 ]
             ])
         );
-        $this->sessionName = $result['result']['sessionName'];
+        $this->sessionName = $response['result']['sessionName'];
     }
 
     public function logout() {
@@ -65,16 +65,24 @@ class Vtiger {
         ]);
     }
 
-    public function getList($module) {
+    public function query(string $module, string $group_by = '') {
         if (!isset($this->sessionName)) {
             throw new \Exception('Cannot get list: not authorized');
         }
 
-        $query = "SELECT * FROM Contacts;";
+        $query = "SELECT * FROM {$module};";
         $query = urlencode($query);
-        $result = $this->getResult(
+        $response = $this->getResponse(
             $this->client->get("{$this->url}?operation=query&sessionName={$this->sessionName}&query={$query}")
         );
-        return $result['result'];
+
+        $result = $response['result'];
+
+        if ($group_by) {
+            $result = array_combine(array_column($result, $group_by), $result);
+        }
+
+        return $result;
     }
+
 }
