@@ -96,4 +96,22 @@ class Vtiger {
 
         return $response['result'];
     }
+
+    public function update(string $id, array $data) {
+        // todo copy array
+        $data['id'] = $id;
+        // $_data = http_build_query($data);
+        $_data = json_encode($data);
+ 
+        $response = $this->getResponse(
+            $this->client->post($this->url, [
+                'body' => [
+                    'operation' => 'update',
+                    'sessionName' => $this->sessionName,
+                    'element' => $_data
+                ]
+            ])
+        );
+    }
+
 }
