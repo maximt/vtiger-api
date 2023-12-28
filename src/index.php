@@ -38,6 +38,13 @@ function view($name, $data = []) {
     ob_flush();
 }
 
+function redirect(string $url) {
+    ob_clean();
+    header("HTTP/1.1 301 Moved Permanently");
+    header("Location: /{$url}");
+    ob_flush();
+    die(); 
+}
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
