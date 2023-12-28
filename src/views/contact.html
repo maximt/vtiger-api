@@ -6,9 +6,18 @@
 
 {% block content %}
 
-<form action="/contacts" method="GET" class="mb-1">
-    <button type="submit" class="btn btn-secondary">Back</button>
-</form>
+<div class="mb-1 clearfix">
+    <form action="/contacts" method="GET" class="float-start p-1">
+        <button type="submit" class="btn btn-secondary">Back</button>
+    </form>
+
+    <form action="/contact" method="POST" class="float-end p-1">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="id" value="{{ contact.id }}">
+
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+</div>
 
 <form action="/contact" method="POST" enctype="multipart/form-data" class="mb-1">
     <input type="hidden" name="id" value="{{ contact.id }}">
@@ -41,10 +50,4 @@
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
-<form action="/contact" method="POST" class="mb-1">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="id" value="{{ contact.id }}">
-
-    <button type="submit" class="btn btn-danger">Delete</button>
-</form>
 {% endblock %}
