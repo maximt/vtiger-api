@@ -103,7 +103,7 @@ class Vtiger {
         // $_data = http_build_query($data);
         $_data = json_encode($data);
  
-        $response = $this->getResponse(
+        $this->getResponse(
             $this->client->post($this->url, [
                 'body' => [
                     'operation' => 'update',
@@ -114,4 +114,15 @@ class Vtiger {
         );
     }
 
+    public function delete(string $id) {
+        $this->getResponse(
+            $this->client->post($this->url, [
+                'body' => [
+                    'operation' => 'delete',
+                    'sessionName' => $this->sessionName,
+                    'id' => $id
+                ]
+            ])
+        );
+    }
 }

@@ -53,8 +53,7 @@ function action_delete_contact() {
         action_error(403);
     }
 
-    echo "action_post_delete_contact: {$id}";
-}
-function action_get_about() {
-    echo 'action_get_about: This is the about page.';
+    delete_contact($id);
+
+    redirect('contacts');
 }
