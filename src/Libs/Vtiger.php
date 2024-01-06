@@ -63,6 +63,7 @@ class Vtiger {
                 'sessionName' => $this->sessionName
             ]
         ]);
+        unset($this->sessionName, $this->token, $this->serverTime, $this->expireTime);
     }
 
     public function query(string $module, string $group_by = '') {
